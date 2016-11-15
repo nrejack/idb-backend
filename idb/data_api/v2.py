@@ -84,6 +84,40 @@ def subitem(t, u, st):
 @this_version.route('/view/<string:t>/<uuid:u>', methods=['GET', 'OPTIONS'])
 @crossdomain(origin="*")
 def item(t, u):
+    """Return an individual record, by UUID
+    ---
+    definitions:
+      - schema:
+          id: Record
+          properties:
+            uuid:
+             type: string
+             description: the record's uuid.
+    parameters:
+        - name: t
+          in: path
+          description: The type of the record
+          required: true
+          type: string
+        - name: u
+          in: path
+          description: The UUID of the record
+          required: true
+          type: string
+    responses:
+        '200':
+          description: The requested record
+          schema:
+            $ref: '#/definitions/Record'
+        '404':
+          description: The requested record was not found.
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: The requested record was found, but contained no data.
+          schema:
+            $ref: '#/definitions/Error'
+    """
     if t not in current_app.config["SUPPORTED_TYPES"]:
         return json_error(404)
 

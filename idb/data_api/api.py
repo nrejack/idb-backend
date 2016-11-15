@@ -2,6 +2,7 @@ from __future__ import division, absolute_import, print_function
 
 from flask import Flask, jsonify, request, abort, url_for
 from flask_uuid import FlaskUUID
+from flask_swagger import swagger
 
 from idb.helpers.cors import crossdomain
 from idb.postgres_backend import apidbpool
@@ -64,3 +65,11 @@ def version():
 @app.route('/healthz', methods=['GET'])
 def healthz():
     return idbmodel.fetchone("SELECT 'ok'")[0]
+
+@app.route("/spec")
+@crossdomain(origin="*")
+def spec():
+    swag = swagger(app)
+    swag['info']['version'] = "2.0"
+    swag['info']['title'] = "iDigBio API"
+    return jsonify(swag)
