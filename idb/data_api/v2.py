@@ -92,7 +92,42 @@ def item(t, u):
           properties:
             uuid:
              type: string
-             description: the record's uuid.
+             description: The UUID of the record.
+            etag:
+             type: string
+             description: An MD5 checksum of the record.
+            modified:
+             type: dateTime
+             description: The date the record was last modified.
+            type:
+             type: string
+             description: The type of the record.
+            version:
+             type: integer
+             description: The version of the record.
+            recordIds:
+             type: array
+             description: One or more identifiers for the record.
+             items:
+              type: string
+            links:
+             type: object
+             description: Any links the record may have to other records
+             additionalProperties:
+              type: array
+              items:
+               type: string
+            data:
+             type: object
+             description: The actual data content of the record
+             additionalProperties:
+              type: string
+      - schema:
+          id: Error
+          properties:
+            error:
+             type: string
+             description: A textual description of the error.
     parameters:
         - name: t
           in: path
@@ -104,6 +139,11 @@ def item(t, u):
           description: The UUID of the record
           required: true
           type: string
+        - name: version
+          in: query
+          description: The version of the record to fetch, -1 or blank to fetch the latest version
+          required: false
+          type: integer
     responses:
         '200':
           description: The requested record
