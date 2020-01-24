@@ -30,7 +30,7 @@ deploy:
     on:
       tags: true
   - provider: script
-    script: TRAVIS_BRANCH=$(printf "%s" "$TRAVIS_BRANCH" | sed 's#/#-#g'); docker tag $BUILDING $DOCKER_IMAGE:$TRAVIS_BRANCH; docker push $DOCKER_IMAGE:$TRAVIS_BRANCH
+    script: export TRAVIS_BRANCH=$(printf "%s" "$TRAVIS_BRANCH" | sed 's#/#-#g'); docker tag $BUILDING $DOCKER_IMAGE:$TRAVIS_BRANCH; docker push $DOCKER_IMAGE:$TRAVIS_BRANCH
     on:
       all_branches: true
 env:
