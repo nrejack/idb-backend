@@ -72,7 +72,7 @@ setup(
             'pytest>=3.0',
             'pytest-cov',
             'pytest-flask',
-            'pytest-mock',
+            'pytest-mock==1.13.0',
             'fakeredis',
         ]
     },
